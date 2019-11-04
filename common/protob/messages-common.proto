@@ -102,36 +102,36 @@ message PinMatrixAck {
 }
 
 /**
- * Response: Device awaits encryption passphrase
- * @auxstart
+ * Response: Device requests passphrase
  * @next PassphraseAck
  */
 message PassphraseRequest {
-    optional bool on_device = 1;    // passphrase is being entered on the device
 }
 
 /**
- * Request: Send passphrase back
- * @next PassphraseStateRequest
+ * Request: Send passphrase or denote it will be entered on device
+ * @next State
  */
 message PassphraseAck {
     optional string passphrase = 1;
-    optional bytes state = 2;       // expected device state
+    optional bool on_device = 2;    // passphrase will be entered on the device
 }
 
 /**
- * Response: Device awaits passphrase state
- * @next PassphraseStateAck
+ * Request: Get state
+ * @auxstart
+ * @next State
+ * @next PassphraseRequest
  */
-message PassphraseStateRequest {
-    optional bytes state = 1;       // actual device state
+message GetState {
 }
 
 /**
- * Request: Send passphrase state back
+ * Response: State
  * @auxend
  */
-message PassphraseStateAck {
+message State {
+    optional bytes state = 1;   // actual device state
 }
 
 /**

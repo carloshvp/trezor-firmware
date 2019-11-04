@@ -10,8 +10,8 @@ if __debug__:
         pass
 
 
-class PassphraseStateRequest(p.MessageType):
-    MESSAGE_WIRE_TYPE = 77
+class State(p.MessageType):
+    MESSAGE_WIRE_TYPE = 81
 
     def __init__(
         self,

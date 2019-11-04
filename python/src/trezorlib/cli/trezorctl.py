@@ -318,22 +318,6 @@ def set_label(connect, label):
 
 
 @cli.command()
-@click.argument("source", type=CHOICE_PASSPHRASE_SOURCE_TYPE)
-@click.pass_obj
-def set_passphrase_source(connect, source):
-    """Set passphrase source.
-
-    Configure how to enter passphrase on Trezor Model T. The options are:
-
-    \b
-    ask - always ask where to enter passphrase
-    device - always enter passphrase on device
-    host - always enter passphrase on host
-    """
-    return device.apply_settings(connect(), passphrase_source=source)
-
-
-@cli.command()
 @click.argument("rotation", type=CHOICE_DISPLAY_ROTATION_TYPE)
 @click.pass_obj
 def set_display_rotation(connect, rotation):

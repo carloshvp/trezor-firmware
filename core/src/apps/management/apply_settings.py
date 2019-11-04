@@ -1,5 +1,5 @@
 from trezor import ui, wire
-from trezor.messages import ButtonRequestType, PassphraseSourceType
+from trezor.messages import ButtonRequestType
 from trezor.messages.Success import Success
 from trezor.ui.text import Text
 
@@ -12,7 +12,6 @@ async def apply_settings(ctx, msg):
         msg.homescreen is None
         and msg.label is None
         and msg.use_passphrase is None
-        and msg.passphrase_source is None
         and msg.display_rotation is None
     ):
         raise wire.ProcessError("No setting provided")
@@ -28,9 +27,6 @@ async def apply_settings(ctx, msg):
     if msg.use_passphrase is not None:
         await require_confirm_change_passphrase(ctx, msg.use_passphrase)
 
-    if msg.passphrase_source is not None:
-        await require_confirm_change_passphrase_source(ctx, msg.passphrase_source)
-
     if msg.display_rotation is not None:
         await require_confirm_change_display_rotation(ctx, msg.display_rotation)
 
@@ -38,7 +34,6 @@ async def apply_settings(ctx, msg):
         label=msg.label,
         use_passphrase=msg.use_passphrase,
         homescreen=msg.homescreen,
-        passphrase_source=msg.passphrase_source,
         display_rotation=msg.display_rotation,
     )
 
@@ -66,19 +61,6 @@ async def require_confirm_change_passphrase(ctx, use):
     text.normal("Do you really want to")
     text.normal("enable passphrase" if use else "disable passphrase")
     text.normal("encryption?")
-    await require_confirm(ctx, text, ButtonRequestType.ProtectCall)
-
-
-async def require_confirm_change_passphrase_source(ctx, source):
-    if source == PassphraseSourceType.DEVICE:
-        desc = "ON DEVICE"
-    elif source == PassphraseSourceType.HOST:
-        desc = "ON HOST"
-    else:
-        desc = "ASK"
-    text = Text("Passphrase source", ui.ICON_CONFIG)
-    text.normal("Do you really want to", "change the passphrase", "source to")
-    text.bold("ALWAYS %s?" % desc)
     await require_confirm(ctx, text, ButtonRequestType.ProtectCall)
 
 

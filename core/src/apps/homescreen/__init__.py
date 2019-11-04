@@ -70,10 +70,9 @@ def get_features() -> Features:
 
 
 async def handle_Initialize(ctx: wire.Context, msg: Initialize) -> Features:
+    # TODO: what to do with state here?
     if msg.state is None or msg.state != cache.get_state(prev_state=bytes(msg.state)):
         cache.clear()
-        if msg.skip_passphrase:
-            cache.set_passphrase("")
     return get_features()
 
 

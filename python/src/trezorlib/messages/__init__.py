@@ -102,6 +102,7 @@ from .GetECDHSessionKey import GetECDHSessionKey
 from .GetEntropy import GetEntropy
 from .GetFeatures import GetFeatures
 from .GetPublicKey import GetPublicKey
+from .GetState import GetState
 from .HDNodePathType import HDNodePathType
 from .HDNodeType import HDNodeType
 from .IdentityType import IdentityType
@@ -189,8 +190,6 @@ from .NEMTransactionCommon import NEMTransactionCommon
 from .NEMTransfer import NEMTransfer
 from .PassphraseAck import PassphraseAck
 from .PassphraseRequest import PassphraseRequest
-from .PassphraseStateAck import PassphraseStateAck
-from .PassphraseStateRequest import PassphraseStateRequest
 from .PinMatrixAck import PinMatrixAck
 from .PinMatrixRequest import PinMatrixRequest
 from .Ping import Ping
@@ -209,6 +208,7 @@ from .SignIdentity import SignIdentity
 from .SignMessage import SignMessage
 from .SignTx import SignTx
 from .SignedIdentity import SignedIdentity
+from .State import State
 from .StellarAccountMergeOp import StellarAccountMergeOp
 from .StellarAddress import StellarAddress
 from .StellarAllowTrustOp import StellarAllowTrustOp

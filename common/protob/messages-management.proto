@@ -23,7 +23,6 @@ enum BackupType {
  */
 message Initialize {
     optional bytes state = 1;           // assumed device state, clear session if set and different
-    optional bool skip_passphrase = 2;  // this session should always assume empty passphrase
 }
 
 /**
@@ -110,7 +109,7 @@ message ApplySettings {
     optional string label = 2;
     optional bool use_passphrase = 3;
     optional bytes homescreen = 4;
-    optional PassphraseSourceType passphrase_source = 5;
+//    optional PassphraseSourceType passphrase_source = 5;  deprecated
     optional uint32 auto_lock_delay_ms = 6;
     optional uint32 display_rotation = 7;  // in degrees from North
     /**
