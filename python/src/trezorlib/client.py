@@ -174,29 +174,23 @@ class TrezorClient:
             return resp
 
     def _callback_passphrase(self, msg):
-        if msg.on_device:
-            passphrase = None
-        else:
-            try:
-                passphrase = self.ui.get_passphrase()
-            except exceptions.Cancelled:
-                self.call_raw(messages.Cancel())
-                raise
+        if False:  # self.passphrase_on_host  TODO: add a flag to client?
+            state = self.call_raw(messages.PassphraseAck(on_device=True))
+            return state
 
-            passphrase = Mnemonic.normalize_string(passphrase)
-            if len(passphrase) > MAX_PASSPHRASE_LENGTH:
-                self.call_raw(messages.Cancel())
-                raise ValueError("Passphrase too long")
+        try:
+            passphrase = self.ui.get_passphrase()
+        except exceptions.Cancelled:
+            self.call_raw(messages.Cancel())
+            raise
 
-        resp = self.call_raw(
-            messages.PassphraseAck(passphrase=passphrase, state=self.state)
-        )
-        if isinstance(resp, messages.PassphraseStateRequest):
-            # TODO report to the user that the passphrase has changed?
-            self.state = resp.state
-            return self.call_raw(messages.PassphraseStateAck())
-        else:
-            return resp
+        passphrase = Mnemonic.normalize_string(passphrase)
+        if len(passphrase) > MAX_PASSPHRASE_LENGTH:
+            self.call_raw(messages.Cancel())
+            raise ValueError("Passphrase too long")
+
+        state = self.call_raw(messages.PassphraseAck(passphrase=passphrase))
+        return state
 
     def _callback_button(self, msg):
         __tracebackhide__ = True  # for pytest # pylint: disable=W0612
@@ -241,6 +235,10 @@ class TrezorClient:
             self.features.patch_version,
         )
         self.check_firmware_version(warn_only=True)
+
+        state = self.call(messages.GetState())
+        # TODO report to the user that the state/passphrase has changed?
+        self.state = state
 
     def is_outdated(self):
         if self.features.bootloader_mode:

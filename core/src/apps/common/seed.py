@@ -113,6 +113,7 @@ async def get_keychain(ctx: wire.Context, namespaces: list) -> Keychain:
     seed = cache.get_seed()
     if seed is None:
         passphrase = cache.get_passphrase()
+        print("keychain passphrase", passphrase)
         if passphrase is None:
             passphrase = await protect_by_passphrase(ctx)
             cache.set_passphrase(passphrase)
