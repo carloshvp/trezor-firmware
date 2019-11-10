@@ -21,7 +21,7 @@
 
 ## Contribute
 
-Inspired by [GitLab Contributing Guide](https://docs.gitlab.com/ee/development/contributing/)
+Inspired by [GitLab Contributing Guide](https://docs.gitlab.com/ee/development/contributing/) 
 
 Make sure to check out general [contribution guidelines](https://wiki.trezor.io/Developers_guide:Contributing) on the Trezor Wiki. If you are contributing to Trezor Core
 (the Trezor T firmware), make sure to check out [Trezor Core contribution guidelines](core/docs/CONTRIBUTING.md) as well.
